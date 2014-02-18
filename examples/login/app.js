@@ -30,7 +30,8 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new CoinbaseStrategy({
     clientID: COINBASE_CLIENT_ID,
     clientSecret: COINBASE_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback"
+    callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback",
+    scope: ["user"]
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
