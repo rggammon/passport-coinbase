@@ -19,6 +19,7 @@
     "url": "http://www.opensource.org/licenses/MIT"
   } ],
   "main": "./lib/passport-coinbase",
+  "types": "./lib/passport-coinbase/index.d.ts",
   "dependencies": {
     "pkginfo": "0.3.x",
     "passport-oauth": "1.0.x"
