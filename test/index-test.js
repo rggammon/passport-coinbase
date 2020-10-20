@@ -1,6 +1,6 @@
 var vows = require('vows');
 var assert = require('assert');
-var coinbase = require('passport-coinbase');
+var coinbase = require('../lib/passport-coinbase/index.js');
 
 
 vows.describe('passport-coinbase').addBatch({
