@@ -1,7 +1,7 @@
 var vows = require('vows');
 var assert = require('assert');
 var util = require('util');
-var CoinbaseStrategy = require('passport-coinbase/strategy');
+var CoinbaseStrategy = require('../lib/passport-coinbase/strategy');
 
 
 vows.describe('CoinbaseStrategy').addBatch({

@@ -52,18 +52,16 @@ application:
 
 ## Examples
 
-For a complete, working example, refer to the [login example](https://github.com/idris/passport-coinbase/tree/master/examples/login).
+For a complete, working example, refer to the [login example](https://github.com/rggammon/passport-coinbase/tree/master/examples/login).
 
 ## Tests
 
     $ npm install --dev
     $ make test
 
-[![Build Status](https://secure.travis-ci.org/idris/passport-coinbase.png)](http://travis-ci.org/idris/passport-coinbase)
-
 ## Credits
-
-  - [Idris Mokhtarzada](https://github.com/idris)
+  - [Ryan Gammon](https://github.com/rggammon)
+  - Forked from [Idris Mokhtarzada](https://github.com/idris) by [Ryan Gammon](https://github.com/rggammon)
   - Forked from [passport-github](https://github.com/jaredhanson/passport-github) by [Jared Hanson](https://github.com/jaredhanson)
 
 ## License
