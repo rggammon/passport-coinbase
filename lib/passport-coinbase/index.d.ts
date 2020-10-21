@@ -5,7 +5,6 @@ declare module "passport-coinbase" {
     export interface Profile extends PassportProfile {
         id: string;
         displayName: string;
-        email: string;
 
         _raw: string;
         _json: any;
