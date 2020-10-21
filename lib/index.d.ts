@@ -16,19 +16,20 @@ declare module "passport-coinbase" {
         _json: any;
     }
 
+    // https://developers.coinbase.com/docs/wallet/coinbase-connect/reference
     export interface StrategyOptions extends OAuth2StrategyOptions {
-        enableProof?: boolean;
-        profileFields?: string[];
-
         authorizationURL?: string;
         tokenURL?: string;
-        profileURL?: string;
-        graphAPIVersion?: string;
+        userProfileURL?: string;
+        account?: 'select' | 'all';
+        referral?: string;
+        accountCurrency?: string;
+        sendLimitAmount?: string;
+        sendLimitCurrency?: string;
+        sendLimitPeriod?: 'day' | 'month' | 'year';
 
-        display?: 'page' | 'popup' | 'touch';
-
-        authType?: 'reauthenticate';
-        authNonce?: string;
+        // layout and meta[name] (sessionName) should be passed to authenticate,
+        // as it does not make sense to set them in the constructor (globally).
     }
 
     export type VerifyFunction =
