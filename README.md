@@ -9,8 +9,8 @@ unobtrusively integrated into any application or framework that supports
 [Connect](http://www.senchalabs.org/connect/)-style middleware, including
 [Express](http://expressjs.com/).
 
-![CI](https://github.com/rggammon/passport-coinbase/workflows/Node.js%20CI/badge.svg)
 [![npm](https://img.shields.io/npm/v/passport-coinbase.svg)](https://www.npmjs.com/package/passport-coinbase)
+![CI](https://github.com/rggammon/passport-coinbase/workflows/Node.js%20CI/badge.svg)
 
 ## Install
 
@@ -39,16 +39,20 @@ refresh token, as well as `profile` which contains the authenticated user's
 GitHub profile.  The `verify` callback must call `cb` providing a user to
 complete authentication.
 
-    passport.use(new CoinbaseStrategy({
-        clientID: COINBASE_CLIENT_ID,
-        clientSecret: COINBASE_CLIENT_SECRET,
-        callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback"
-      },
-      function(accessToken, refreshToken, profile, done) {
-        // ...
-      }
-    ));
+```js
+var CoinbaseStrategy = require('passport-coinbase').Strategy;
 
+passport.use(new CoinbaseStrategy({
+    clientID: COINBASE_CLIENT_ID,
+    clientSecret: COINBASE_CLIENT_SECRET,
+    callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ coinbaseId: profile.id }, function (err, user) {
+      return cb(err, user);
+  }
+));
+```
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'coinbase'` strategy, to
@@ -58,20 +62,25 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-    app.get('/auth/coinbase',
-      passport.authenticate('coinbase'));
+app.get('/auth/coinbase',
+  passport.authenticate('coinbase'));
 
-    app.get('/auth/coinbase/callback', 
-      passport.authenticate('coinbase', { failureRedirect: '/login' }),
-      function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/');
-      });
+app.get('/auth/coinbase/callback', 
+  passport.authenticate('coinbase', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 ```
 
 ## Examples
 
-For a complete, working example, refer to the [login example](https://github.com/rggammon/passport-coinbase/tree/master/examples/login).
+Developers using the popular [Express](http://expressjs.com/) web framework can
+refer to an [example](https://github.com/passport/express-4.x-facebook-example)
+as a starting point for their own web applications.  The example shows how to
+authenticate users using Facebook.  However, because both Facebook and Coinbase
+use OAuth 2.0, the code is similar.  Simply replace references to Facebook with
+corresponding references to Coinbase.
 
 ## Contributing
 

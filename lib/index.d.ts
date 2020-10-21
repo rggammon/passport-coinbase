@@ -3,9 +3,15 @@ declare type PassportProfile = import("passport").Profile
 
 declare module "passport-coinbase" {
     export interface Profile extends PassportProfile {
-        id: string;
-        displayName: string;
-
+        profileLocation: string,
+        profileBio: string,
+        profileUrl: string,
+        timeZone: string,
+        nativeCurrency: string,
+        bitcoinUnit: string,
+        country: { code: string, name: string },
+        createdAt: Date,
+      
         _raw: string;
         _json: any;
     }

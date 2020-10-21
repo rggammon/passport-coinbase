@@ -12,6 +12,7 @@
   ],
   "author": {
     "name": "Ryan Gammon",
+    "email": "ryan@gamnation.net",
     "url": "https://github.com/rggammon"
   },
   "repository": {
@@ -27,8 +28,8 @@
       "url": "http://www.opensource.org/licenses/MIT"
     }
   ],
-  "main": "./lib/passport-coinbase",
-  "types": "./lib/passport-coinbase/index.d.ts",
+  "main": "./lib",
+  "types": "./lib/index.d.ts",
   "dependencies": {
     "passport-oauth2": "1.x.x"
   },
@@ -38,10 +39,10 @@
     "chai-passport-strategy": "1.x.x",
     "proxyquire": "1.4.x"
   },
-  "scripts": {
-    "test": "vows test/*-test.js"
-  },
   "engines": {
     "node": ">= 10.x"
+  },
+  "scripts": {
+    "test": "mocha --require ./test/bootstrap/node"
   }
 }
