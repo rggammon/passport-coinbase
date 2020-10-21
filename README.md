@@ -9,29 +9,50 @@ unobtrusively integrated into any application or framework that supports
 [Connect](http://www.senchalabs.org/connect/)-style middleware, including
 [Express](http://expressjs.com/).
 
+[![npm](https://img.shields.io/npm/v/passport-coinbase.svg)](https://www.npmjs.com/package/passport-coinbase)
+![CI](https://github.com/rggammon/passport-coinbase/workflows/Node.js%20CI/badge.svg)
+
 ## Install
 
-    $ npm install passport-coinbase
+```bash
+$ npm install passport-coinbase
+```
 
 ## Usage
+
+#### Create an Application
+
+Before using `passport-coinbase`, you must register an application with Coinbase.
+If you have not already done so, a new application can be created at
+[New OAuth2 application](https://www.coinbase.com/oauth/applications/new) within
+Coinbase's settings panel.  Your application will be issued a client ID and client
+secret, which need to be provided to the strategy.  You will also need to
+configure a callback URL which matches the route in your application.
 
 #### Configure Strategy
 
 The Coinbase authentication strategy authenticates users using a Coinbase account
-and OAuth 2.0 tokens.  The strategy requires a `verify` callback, which accepts
-these credentials and calls `done` providing a user, as well as `options`
-specifying a client ID, client secret, and callback URL.
+and OAuth 2.0 tokens.  The client ID and secret obtained when creating an
+application are supplied as options when creating the strategy.  The strategy
+also requires a `verify` callback, which receives the access token and optional
+refresh token, as well as `profile` which contains the authenticated user's
+GitHub profile.  The `verify` callback must call `cb` providing a user to
+complete authentication.
 
-    passport.use(new CoinbaseStrategy({
-        clientID: COINBASE_CLIENT_ID,
-        clientSecret: COINBASE_CLIENT_SECRET,
-        callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback"
-      },
-      function(accessToken, refreshToken, profile, done) {
-        // ...
-      }
-    ));
+```js
+var CoinbaseStrategy = require('passport-coinbase').Strategy;
 
+passport.use(new CoinbaseStrategy({
+    clientID: COINBASE_CLIENT_ID,
+    clientSecret: COINBASE_CLIENT_SECRET,
+    callbackURL: "http://127.0.0.1:3000/auth/coinbase/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ coinbaseId: profile.id }, function (err, user) {
+      return cb(err, user);
+  }
+));
+```
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'coinbase'` strategy, to
@@ -40,26 +61,47 @@ authenticate requests.
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
-    app.get('/auth/coinbase',
-      passport.authenticate('coinbase'));
+```js
+app.get('/auth/coinbase',
+  passport.authenticate('coinbase'));
 
-    app.get('/auth/coinbase/callback', 
-      passport.authenticate('coinbase', { failureRedirect: '/login' }),
-      function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/');
-      });
+app.get('/auth/coinbase/callback', 
+  passport.authenticate('coinbase', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+```
 
 ## Examples
 
-For a complete, working example, refer to the [login example](https://github.com/rggammon/passport-coinbase/tree/master/examples/login).
+Developers using the popular [Express](http://expressjs.com/) web framework can
+refer to an [example](https://github.com/passport/express-4.x-facebook-example)
+as a starting point for their own web applications.  The example shows how to
+authenticate users using Facebook.  However, because both Facebook and Coinbase
+use OAuth 2.0, the code is similar.  Simply replace references to Facebook with
+corresponding references to Coinbase.
 
-## Tests
+## Contributing
 
-    $ npm install --dev
-    $ make test
+#### Tests
+The test suite is located in the `test/` directory.  All new features are
+expected to have corresponding test cases.  Ensure that the complete test suite
+passes by executing:
 
-![CI](https://github.com/rggammon/passport-coinbase/workflows/Node.js%20CI/badge.svg)
+```bash
+$ make test
+```
+
+#### Coverage
+
+Coverage reports can be viewed by executing:
+
+```bash
+$ make test-cov
+$ make view-cov
+```
+
 
 ## Credits
   - [Ryan Gammon](https://github.com/rggammon)
