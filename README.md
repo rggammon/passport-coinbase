@@ -85,23 +85,12 @@ corresponding references to Coinbase.
 ## Contributing
 
 #### Tests
-The test suite is located in the `test/` directory.  All new features are
-expected to have corresponding test cases.  Ensure that the complete test suite
-passes by executing:
+The test suite is located in the `test/` directory.  Ensure that the complete 
+test suite passes by executing:
 
 ```bash
-$ make test
+$ npm test
 ```
-
-#### Coverage
-
-Coverage reports can be viewed by executing:
-
-```bash
-$ make test-cov
-$ make view-cov
-```
-
 
 ## Credits
   - [Ryan Gammon](https://github.com/rggammon)
